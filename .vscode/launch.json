@@ -1,0 +1,51 @@
+{
+    // IntelliSense를 사용하여 가능한 특성에 대해 알아보세요.
+    // 기존 특성에 대한 설명을 보려면 가리킵니다.
+    // 자세한 내용을 보려면 https://go.microsoft.com/fwlink/?linkid=830387을(를) 방문하세요.
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Meta R-CNN train phase1",
+            "type": "python",
+            "request": "launch",
+            "program": "train_metarcnn.py",
+            "console": "integratedTerminal",
+            "args": ["--dataset", "pascal_voc_0712", "--epochs", "31", "--bs", "4", "--nw", "8", "--log_dir", "data/VOCdevkit2007/tensorboard", "--save_dir", "data/backup/200630", "--meta_type", "1", "--meta_train", "True", "--meta_loss", "True", "--shots", "49"],
+            "env": {"CUDA_VISIBLE_DEVICES":"0"}
+        },
+        {
+            "name": "Meta R-CNN train phase1 resume",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": ["--dataset", "pascal_voc_0712", "--epochs", "100", "--bs", "2", "--nw", "8", "--log_dir", "data/VOCdevkit2007/tensorboard", "--save_dir", "data/backup/200623", "--meta_type", "1", "--meta_train", "True", "--meta_loss", "True", "--shots", "20", "--r", "True", "--checksession", "20", "--checkepoch", "49", "--checkpoint", "85"],
+            "env": {"CUDA_VISIBLE_DEVICES":"0, 1"}
+        },
+        {
+            "name": "Meta R-CNN train phase2",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": ["--dataset", "pascal_voc_0712", "--epochs", "400", "--bs", "4", "--nw", "8", "--log_dir", "checkpoint", "--save_dir", "models/meta/defect_200618", "--r", "True", "--checksession", "1", "--checkepoch", "299", "--checkpoint", "42", "--phase", "2", "--meta_type", "1", "--meta_train", "True", "--meta_loss", "True", "--shots", "20"],
+            "env": {"CUDA_VISIBLE_DEVICES":"0"}
+        },
+        {
+            "name": "Meta R-CNN test",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": ["--dataset", "pascal_voc_0712", "--net", "metarcnn", "--load_dir", "models/meta/defect_200618", "--checksession", "20", "--checkepoch", "337", "--checkpoint", "197", "--shots", "20",  "--meta_type", "1", "--meta_test", "True", "--meta_loss", "True", "--phase", "2", "--vis"],
+            "env": {"CUDA_VISIBLE_DEVICES":"0"}
+        }
+    ]
+}

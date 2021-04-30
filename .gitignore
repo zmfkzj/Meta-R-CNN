@@ -1,0 +1,7 @@
+*.pth
+events.out.tfevents*
+*.pkl
+*.csv
+*.pyc
+*_pycache__*
+data/VOCdevkit*
