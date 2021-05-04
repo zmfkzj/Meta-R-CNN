@@ -17,8 +17,8 @@
             "request": "launch",
             "program": "train_metarcnn.py",
             "console": "integratedTerminal",
-            "args": ["--dataset", "pascal_voc_0712", "--epochs", "31", "--bs", "4", "--nw", "8", "--log_dir", "data/VOCdevkit2007/tensorboard", "--save_dir", "data/backup/200630", "--meta_type", "1", "--meta_train", "True", "--meta_loss", "True", "--shots", "49"],
-            "env": {"CUDA_VISIBLE_DEVICES":"0"}
+            "args": ["--dataset", "pascal_voc_0712", "--epochs", "100", "--bs", "4", "--nw", "8", "--log_dir", "data/VOCdevkit2007/tensorboard", "--save_dir", "data/backup/210504", "--meta_type", "1", "--meta_train", "True", "--meta_loss", "True", "--shots", "747"],
+            "env": {"CUDA_VISIBLE_DEVICES":"0,1", "PYTHONPATH":"${workspaceFolder}/lib"}
         },
         {
             "name": "Meta R-CNN train phase1 resume",

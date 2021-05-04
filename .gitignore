@@ -5,3 +5,6 @@ events.out.tfevents*
 *.pyc
 *_pycache__*
 data/VOCdevkit*
+*.cu.o
+*.so
+*.whl

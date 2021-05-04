@@ -24,9 +24,9 @@ __C.TRAIN.LEARNING_RATE = 0.001
 __C.TRAIN.META_TYPE = 1
 
 ##### set classes ###
-__C.TRAIN.ALLCLASSES_FIRST = ['박락', '누수', '재료분리', '들뜸', '부식', '백태', '박리', '철근노출', '파손']
+__C.TRAIN.ALLCLASSES_FIRST = classes = [ 'Bolt', 'Plier', 'Wrench', 'Washer', 'Nail', 'LuggageTag','Tag', 'AdjustableClamp', 'Nut', 'BoltNutSet', 'AdjustableWrench', 'MetalSheet', 'Hose', ]
 
-__C.TRAIN.BASECLASSES_FIRST = ['부식', '백태', '박리', '철근노출', '파손']
+__C.TRAIN.BASECLASSES_FIRST = ['Bolt', 'Plier', 'Wrench', 'Washer', 'Nail', 'LuggageTag']
 
 __C.TRAIN.ALLCLASSES_SECOND = ['bicycle', 'bird', 'boat', 'bus', 'car', 'cat', 'chair', 'diningtable', 'dog', 'motorbike',
                          'person', 'pottedplant', 'sheep', 'train', 'tvmonitor', 'aeroplane', 'bottle', 'cow',

@@ -54,7 +54,7 @@ class VOCDetection(data.Dataset):
     self.target_transform = target_transform
     self.name = dataset_name
     self._annopath = os.path.join('%s', 'Annotations', '%s.xml')
-    self._imgpath = os.path.join('%s', 'JPEGImages', '%s.jpg')
+    self._imgpath = os.path.join('%s', 'JPEGImages', '%s.PNG')
     self.ids = list()
     for (year, name) in image_sets:
       self._year = year
@@ -115,7 +115,7 @@ class pascal_voc(imdb):
                      'motorbike', 'person', 'pottedplant',
                      'sheep', 'sofa', 'train', 'tvmonitor')
     self._class_to_ind = dict(list(zip(self.classes, list(range(self.num_classes)))))
-    self._image_ext = '.jpg'
+    self._image_ext = '.PNG'
     self._image_index = self._load_image_set_index()
     # Default to roidb handler
     self._roidb_handler = self.gt_roidb
