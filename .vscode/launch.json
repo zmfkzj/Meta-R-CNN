@@ -17,7 +17,15 @@
             "request": "launch",
             "program": "train_metarcnn.py",
             "console": "integratedTerminal",
-            "args": ["--dataset", "pascal_voc_0712", "--epochs", "100", "--bs", "4", "--nw", "8", "--log_dir", "data/VOCdevkit2007/tensorboard", "--save_dir", "data/backup/210504", "--meta_type", "1", "--meta_train", "True", "--meta_loss", "True", "--shots", "747"],
+            "args": ["--dataset", "pascal_voc_0712", 
+                    "--epochs", "21", 
+                    "--bs", "4", 
+                    "--nw", "8", 
+                    "--log_dir", "data/VOCdevkit2007/tensorboard", 
+                    "--save_dir", "data/backup/210507", 
+                    "--meta_type", "1", 
+                    "--meta_train", "True", 
+                    "--meta_loss", "True"],
             "env": {"CUDA_VISIBLE_DEVICES":"0,1", "PYTHONPATH":"${workspaceFolder}/lib"}
         },
         {
@@ -26,26 +34,53 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "args": ["--dataset", "pascal_voc_0712", "--epochs", "100", "--bs", "2", "--nw", "8", "--log_dir", "data/VOCdevkit2007/tensorboard", "--save_dir", "data/backup/200623", "--meta_type", "1", "--meta_train", "True", "--meta_loss", "True", "--shots", "20", "--r", "True", "--checksession", "20", "--checkepoch", "49", "--checkpoint", "85"],
-            "env": {"CUDA_VISIBLE_DEVICES":"0, 1"}
+            "args": ["--dataset", "pascal_voc_0712", 
+                    "--epochs", "100", 
+                    "--bs", "2", 
+                    "--nw", "8", 
+                    "--log_dir", "data/VOCdevkit2007/tensorboard", 
+                    "--save_dir", "data/backup/200623", 
+                    "--meta_type", "1", 
+                    "--meta_train", "True", 
+                    "--meta_loss", "True", 
+                    "--shots", "20", 
+                    "--r", "True", 
+                    "--checksession", "20", 
+                    "--checkepoch", "49", 
+                    "--checkpoint", "85"],
+            "env": {"CUDA_VISIBLE_DEVICES":"0,1", "PYTHONPATH":"${workspaceFolder}/lib"}
         },
         {
             "name": "Meta R-CNN train phase2",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "train_metarcnn.py",
             "console": "integratedTerminal",
-            "args": ["--dataset", "pascal_voc_0712", "--epochs", "400", "--bs", "4", "--nw", "8", "--log_dir", "checkpoint", "--save_dir", "models/meta/defect_200618", "--r", "True", "--checksession", "1", "--checkepoch", "299", "--checkpoint", "42", "--phase", "2", "--meta_type", "1", "--meta_train", "True", "--meta_loss", "True", "--shots", "20"],
-            "env": {"CUDA_VISIBLE_DEVICES":"0"}
+            "args": ["--dataset", "pascal_voc_0712", 
+                    "--epochs", "30", 
+                    "--bs", "4", 
+                    "--nw", "8", 
+                    "--log_dir", "checkpoint", 
+                    "--save_dir", "data/backup/210507", 
+                    "--r", "True", 
+                    "--checksession", "1", 
+                    "--checkepoch", "99", 
+                    "--checkpoint", "1008", 
+                    "--phase", "2", 
+                    "--meta_type", "1", 
+                    "--meta_train", "True", 
+                    "--meta_loss", "True", 
+                    "--shots", "243"],
+            "env": {"CUDA_VISIBLE_DEVICES":"0,1", "PYTHONPATH":"${workspaceFolder}/lib"}
         },
         {
             "name": "Meta R-CNN test",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "test_metarcnn.py",
             "console": "integratedTerminal",
-            "args": ["--dataset", "pascal_voc_0712", "--net", "metarcnn", "--load_dir", "models/meta/defect_200618", "--checksession", "20", "--checkepoch", "337", "--checkpoint", "197", "--shots", "20",  "--meta_type", "1", "--meta_test", "True", "--meta_loss", "True", "--phase", "2", "--vis"],
-            "env": {"CUDA_VISIBLE_DEVICES":"0"}
+            "args": ["--dataset", "pascal_voc_0712", "--net", "metarcnn", "--load_dir", "data/backup/210504", "--checksession", "1", "--checkepoch", "125", "--checkpoint", "3420", "--shots", "243",  "--meta_type", "1", "--meta_test", "True", "--meta_loss", "True", "--phase", "2", "--vis"],
+            "env": {"CUDA_VISIBLE_DEVICES":"0,1", "PYTHONPATH":"${workspaceFolder}/lib"}
         }
     ]
 }
