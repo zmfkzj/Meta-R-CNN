@@ -24,9 +24,9 @@ __C.TRAIN.LEARNING_RATE = 0.001
 __C.TRAIN.META_TYPE = 1
 
 ##### set classes ###
-__C.TRAIN.ALLCLASSES_FIRST = classes = [ 'Bolt', 'Plier', 'Wrench', 'Washer', 'Nail', 'LuggageTag','Tag', 'AdjustableClamp', 'Nut', 'BoltNutSet', 'AdjustableWrench', 'MetalSheet', 'Hose', ]
+__C.TRAIN.ALLCLASSES_FIRST = classes = [ 'Crack', 'Leakage', 'Efflor', 'Fail', 'peeling', 'desqu','MS']
 
-__C.TRAIN.BASECLASSES_FIRST = ['Bolt', 'Plier', 'Wrench', 'Washer', 'Nail', 'LuggageTag']
+__C.TRAIN.BASECLASSES_FIRST = ['Leakage', 'Efflor', 'peeling', 'desqu','MS']
 
 __C.TRAIN.ALLCLASSES_SECOND = ['bicycle', 'bird', 'boat', 'bus', 'car', 'cat', 'chair', 'diningtable', 'dog', 'motorbike',
                          'person', 'pottedplant', 'sheep', 'train', 'tvmonitor', 'aeroplane', 'bottle', 'cow',

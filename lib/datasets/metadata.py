@@ -40,7 +40,7 @@ class MetaDataset(data.Dataset):
             self.shots = shots * 3
         self.shuffle=shuffle
         self._annopath = os.path.join('%s', 'Annotations', '%s.xml')
-        self._imgpath = os.path.join('%s', 'JPEGImages', '%s.PNG')
+        self._imgpath = os.path.join('%s', 'JPEGImages', '%s.png')
         self.shot_path  = open(os.path.join(self.root, 'VOC2007', 'ImageSets/Main/shots.txt'), 'w')  # the default saved path
         self.ids = list()
         for (year, name) in image_sets:

@@ -12,7 +12,6 @@ import sys
 import numpy as np
 import argparse
 import pprint
-import pdb
 import time
 import torch
 import cv2
@@ -35,6 +34,8 @@ from model.utils.net_utils import weights_normal_init, save_net, load_net, \
 #from tsne import plot_embedding
 import collections
 import datetime as dt
+import json
+from dtsummary.object import DetectDataset,DetectImage,Bbox
 
 try:
     xrange  # Python 2
@@ -120,7 +121,7 @@ if __name__ == '__main__':
         args.imdbval_name = "coco_2014_minival"
         args.set_cfgs = ['ANCHOR_SCALES', '[4, 8, 16, 32]', 'ANCHOR_RATIOS', '[0.5,1,2]', 'MAX_NUM_GT_BOXES', '50']
     elif args.dataset == "pascal_voc_0712":
-        args.imdbval_name = "voc_2007_trainval"
+        args.imdbval_name = "voc_2007_default"
         args.set_cfgs = ['ANCHOR_SCALES', '[8, 16, 32]', 'ANCHOR_RATIOS', '[0.5,1,2]', 'MAX_NUM_GT_BOXES', '20']
     # the number of sets of metaclass
     cfg.TRAIN.META_TYPE = args.meta_type
@@ -201,13 +202,7 @@ if __name__ == '__main__':
     _t = {'im_detect': time.time(), 'misc': time.time()}
     det_file = os.path.join(output_dir, 'detections.pkl')
 
-    pred = []
-    dt_col = ['class', 'conf', 'img', 'img_W', 'img_H', 'pred_left','pred_top','pred_right','pred_bottom', 'runtime']
-    pred.append(dt_col)
-    runtime_perImg = []
     for i in range(num_images):
-    # for i in range(3):
-        pred_start_time = time.time()
         data = next(data_iter)
         im_data_list = []
         im_info_list = []
@@ -361,25 +356,21 @@ if __name__ == '__main__':
             # plt.imshow(im2show[:, :, ::-1])
             # plt.show()
 
-        runtime_perImg.append(time.time()-pred_start_time)
-
-    dt_col = ['class', 'conf', 'img', 'img_W', 'img_H', 'pred_left','pred_top','pred_right','pred_bottom', 'runtime']
-    root = 'data/VOCdevkit2007/VOC2007'
-    for cls_idx in range(1, imdb.num_classes):
-        for img_idx in range(imdb.num_images):
+    custom_results = DetectDataset()
+    for img_idx in range(imdb.num_images):
+        img_W = roidb[img_idx]['width']
+        img_H = roidb[img_idx]['height']
+        filename = roidb[img_idx]['image']
+        dtimg = DetectImage(filename=filename,image_size=(img_H,img_W))
+        for cls_idx in range(1, imdb.num_classes):
+            pred_class = imdb.classes[cls_idx]
             for i in range(len(all_boxes[cls_idx][img_idx])):
-                pred_class = imdb.classes[cls_idx]
-                pred_img = os.path.relpath(roidb[img_idx]['image'], root)
-                img_W = roidb[img_idx]['width']
-                img_H = roidb[img_idx]['height']
                 pred_left, pred_top, pred_right, pred_bottom, conf = all_boxes[cls_idx][img_idx][i]
-                runtime = runtime_perImg[img_idx]
-                pred.append([pred_class, conf, pred_img, img_W, img_H, pred_left, pred_top, pred_right, pred_bottom, runtime])
-    pred = [','.join(map(str, p)) for p in pred]
-    detection_time = (dt.datetime.now()+dt.timedelta(hours=9)).strftime('%y%m%d-%H%M') 
-    save_path = '{}/{}_pred_MRCN_{}-{}-{}_{}.csv'.format(root, args.imdbval_name.split('_')[-1], args.checksession, args.checkepoch, args.checkpoint, detection_time)
-    with open(save_path,'w', encoding='euc-kr') as f:
-        f.write("\n".join(pred))
+                bbox = Bbox((img_H,img_W),label=pred_class,voc_bbox=(pred_left, pred_top, pred_right, pred_bottom),confidence=conf)
+                dtimg.dt.append(bbox.data)
+        custom_results.append(dtimg.data)
+
+    custom_results.to_custom_json()
         
 
     with open(det_file, 'wb') as f:
